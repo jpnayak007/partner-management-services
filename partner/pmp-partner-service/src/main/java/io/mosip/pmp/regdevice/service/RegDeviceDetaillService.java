@@ -2,6 +2,7 @@ package io.mosip.pmp.regdevice.service;
 
 import io.mosip.pmp.authdevice.dto.DeviceDetailDto;
 import io.mosip.pmp.authdevice.dto.IdDto;
+import io.mosip.pmp.authdevice.dto.UpdateDeviceDetailStatusDto;
 import io.mosip.pmp.authdevice.exception.AuthDeviceServiceException;
 
 public interface RegDeviceDetaillService {
@@ -27,4 +28,12 @@ public interface RegDeviceDetaillService {
 	 */
 
 	public IdDto updateDeviceDetails(DeviceDetailDto deviceDetails);
+	
+	/**
+	 * Function to approve/reject device details
+	 * 
+	 * @param deviceDetails
+	 * @return 
+	 */
+	public String updateDeviceDetailStatus(UpdateDeviceDetailStatusDto deviceDetails);
 }

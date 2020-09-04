@@ -13,11 +13,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import io.mosip.kernel.core.idgenerator.spi.MISPLicenseGenerator;
 import io.mosip.kernel.core.idgenerator.spi.MispIdGenerator;
@@ -34,14 +33,12 @@ import io.mosip.pmp.misp.exception.MISPException;
 import io.mosip.pmp.misp.repository.MispLicenseKeyRepository;
 import io.mosip.pmp.misp.repository.MispServiceRepository;
 import io.mosip.pmp.misp.service.MISPManagementService;
-import io.mosip.pmp.misp.test.MispServiceTest;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MispServiceTest.class)
-@AutoConfigureMockMvc
-@EnableWebMvc
+@SpringBootTest
 public class MISPServiceTest {
 
+	@Autowired
 	MISPManagementService service;
 	
 	@Mock
@@ -59,7 +56,6 @@ public class MISPServiceTest {
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
-		service = new MISPManagementService();
 		ReflectionTestUtils.setField(service, "mispRepository", mispRepository);
 		ReflectionTestUtils.setField(service, "misplKeyRepository", misplKeyRepository);
 		ReflectionTestUtils.setField(service, "mispIdGenerator", mispIdGenerator);
@@ -69,6 +65,17 @@ public class MISPServiceTest {
 	@Test
 	public void createMISPTest() {
 		MISPCreateRequestDto mispCreateRequest = serviceCreateRequest();
+		Mockito.when(mispRepository.findByName(mispCreateRequest.getName())).thenReturn(null);
+		Mockito.when(mispRepository.findByName(mispCreateRequest.getName())).thenReturn(null);
+		Mockito.when(mispIdGenerator.generateId()).thenReturn("100");			
+		ResponseWrapper<MISPCreateResponseDto> response = service.createMISP(mispCreateRequest);
+		assertNotNull(response);
+	}
+	
+	@Test(expected = MISPException.class)
+	public void createMISPTest_S01() {
+		MISPCreateRequestDto mispCreateRequest = serviceCreateRequest();
+		mispCreateRequest.setEmailId("test");
 		Mockito.when(mispRepository.findByName(mispCreateRequest.getName())).thenReturn(null);
 		Mockito.when(mispRepository.findByName(mispCreateRequest.getName())).thenReturn(null);
 		Mockito.when(mispIdGenerator.generateId()).thenReturn("100");			
@@ -229,6 +236,18 @@ public class MISPServiceTest {
 	@Test
 	public void updateMISPTest() {
 		MISPUpdateRequestDto request = updateRequest();
+		Optional<MISPEntity> misp = Optional.of(misp("Inprogress",false));
+		MISPEntity mispName = misp.get();
+		mispName.setName("Telecom");
+		Mockito.when(mispRepository.findById(request.getMispID())).thenReturn(misp);
+		Mockito.when(mispRepository.findByName(mispName.getName())).thenReturn(mispName);
+		service.update(request);
+	}
+	
+	@Test(expected = MISPException.class)
+	public void updateMISPTest_S01() {
+		MISPUpdateRequestDto request = updateRequest();
+		request.setEmailId("test");
 		Optional<MISPEntity> misp = Optional.of(misp("Inprogress",false));
 		MISPEntity mispName = misp.get();
 		mispName.setName("Telecom");
@@ -440,7 +459,7 @@ public class MISPServiceTest {
 		MISPUpdateRequestDto dto = new MISPUpdateRequestDto();
 		dto.setAddress("Banaglore");
 		dto.setContactNumber("9902344554");
-		dto.setEmailId("India@gmail.com");
+		dto.setEmailId("india@gmail.com");
 		dto.setMispID("12345");
 		dto.setName("Huwai");		
 		
@@ -493,9 +512,7 @@ public class MISPServiceTest {
 		dto.setAddress("Bangalore");
 		dto.setContactNumber("1234567890");
 		dto.setEmailId("airtel@gmail.com");
-		dto.setName("Airtel");
-		dto.setOrganizationName("Airtel");
-		
+		dto.setName("Airtel");		
 		return dto;
 	}
 	

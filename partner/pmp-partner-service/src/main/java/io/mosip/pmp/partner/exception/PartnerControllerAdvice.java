@@ -59,19 +59,7 @@ public class PartnerControllerAdvice extends ResponseEntityExceptionHandler {
 		errorResponse.setMessage(exception.getErrorText());
 		responseError.setErrors(errorResponse);
 		return new ResponseEntity<>(responseError, HttpStatus.OK);
-	}
-
-	@ExceptionHandler(AuthenticationFailedException.class)
-	public ResponseEntity<ResponseWrapper<ErrorResponse>> getAuthenticationFailedExceptionMassage(
-			final HttpServletRequest httpServletRequest, final AuthenticationFailedException exception)
-			throws IOException {
-		ResponseWrapper<ErrorResponse> responseError = setErrors(httpServletRequest);
-		ErrorResponse errorResponse = new ErrorResponse();
-		errorResponse.setErrorCode(exception.getErrorCode());
-		errorResponse.setMessage(exception.getErrorText());
-		responseError.setErrors(errorResponse);
-		return new ResponseEntity<>(responseError, HttpStatus.OK);
-	}
+	}	
 
 	@ExceptionHandler(PartnerAlreadyRegisteredWithSamePolicyGroupException.class)
 	public ResponseEntity<ResponseWrapper<ErrorResponse>> getPartnerAlreadyRegisteredWithSamePolicyGroupExceptionMassage(
@@ -208,6 +196,26 @@ public class PartnerControllerAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(responseError, HttpStatus.OK);
 	}
 
+	/**
+	 * @param httpServletRequest
+	 *            this class contains servlet request
+	 * @param exception
+	 *            this class contains Partner APIKeyReqID Does Not Exist Exception
+	 * @return this class contains errorCode and message
+	 * @throws IOException
+	 *             this class contains Checked Exception
+	 */
+	@ExceptionHandler(EmailIdAlreadyExistException.class)
+	public ResponseEntity<ResponseWrapper<ErrorResponse>> emailIdDupicateExceptionMessage(
+			final HttpServletRequest httpServletRequest, final EmailIdAlreadyExistException exception) {
+		ResponseWrapper<ErrorResponse> responseError = new ResponseWrapper<>();
+		ErrorResponse errorResponse = new ErrorResponse();
+		errorResponse.setErrorCode(exception.getErrorCode());
+		errorResponse.setMessage(exception.getErrorText());
+		responseError.setErrors(errorResponse);
+		return new ResponseEntity<>(responseError, HttpStatus.OK);
+	}
+	
 	/**
 	 * @param httpServletRequest
 	 *            this class contains servlet request

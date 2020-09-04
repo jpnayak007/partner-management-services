@@ -1,14 +1,11 @@
 package io.mosip.pmp.authdevice.dto;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.stereotype.Component;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
 @Data
 public class DeviceDetailDto {
 	@NotNull

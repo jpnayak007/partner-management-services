@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import io.mosip.pmp.authdevice.dto.DeviceDetailDto;
 import io.mosip.pmp.authdevice.dto.IdDto;
+import io.mosip.pmp.authdevice.dto.UpdateDeviceDetailStatusDto;
 
 @Service
 public interface DeviceDetaillService {
@@ -29,4 +30,12 @@ public interface DeviceDetaillService {
 	 */
 
 	public IdDto updateDeviceDetails(DeviceDetailDto deviceDetails);
+	
+	/**
+	 * Function to approve/reject device details
+	 * 
+	 * @param deviceDetails
+	 * @return 
+	 */
+	public String updateDeviceDetailStatus(UpdateDeviceDetailStatusDto deviceDetails);
 }

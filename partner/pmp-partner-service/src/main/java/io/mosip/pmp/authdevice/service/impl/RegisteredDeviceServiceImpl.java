@@ -68,7 +68,6 @@ import io.mosip.pmp.authdevice.dto.RegisteredDevicePostDto;
 import io.mosip.pmp.authdevice.dto.SearchDto;
 import io.mosip.pmp.authdevice.dto.SearchFilter;
 import io.mosip.pmp.authdevice.dto.SearchSort;
-import io.mosip.pmp.authdevice.dto.SecretKeyRequest;
 import io.mosip.pmp.authdevice.dto.SignRequestDto;
 import io.mosip.pmp.authdevice.dto.SignResponseDto;
 import io.mosip.pmp.authdevice.dto.TokenRequestDTO;
@@ -606,11 +605,8 @@ public class RegisteredDeviceServiceImpl implements RegisteredDeviceService {
 		boolean isValid = false;
 
 		if (StringUtils.isNotEmpty(token)) {
-
 			isValid = TokenHandlerUtil.isValidBearerToken(token, environment.getProperty("token.request.issuerUrl"),
 					environment.getProperty("token.request.clientId"));
-
-
 		}
 		if (!isValid) {
 		TokenRequestDTO<PasswordRequest> tokenRequestDTO = new TokenRequestDTO<PasswordRequest>();
@@ -653,7 +649,6 @@ public class RegisteredDeviceServiceImpl implements RegisteredDeviceService {
 	
 
 	private PasswordRequest setPasswordRequestDTO() {
-
 		PasswordRequest request = new PasswordRequest();
 		request.setAppId(environment.getProperty("token.request.appid"));
 		request.setPassword(environment.getProperty("token.request.password"));

@@ -252,7 +252,6 @@ public class MispControllerTest {
 		dto.setContactNumber("1234567890");
 		dto.setEmailId("airtel@gmail.com");
 		dto.setName("Airtel");
-		dto.setOrganizationName("Airtel");
 		request.setRequest(dto);
 		
 		return request;

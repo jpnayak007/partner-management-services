@@ -18,15 +18,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value ="MISPCreateRequest" ,description = "MISP create request representation")
-public class MISPCreateRequestDto {
-	
-    /**
-     *  organizationName carries misp organiization name<br/>
-     *  Ex : Banking, Insurance, telecom <br/>  
-     */	
-	@Size(min = 1, max = 128)
-	@ApiModelProperty(value ="organizationName", required = true, dataType = "java.lang.String")	
-	public String organizationName;	
+public class MISPCreateRequestDto {	
 	
 	/**
 	 *  contactNumber carries mobile number of the misp.
@@ -64,5 +56,4 @@ public class MISPCreateRequestDto {
 	@Size(min = 1, max= 2000)
 	@ApiModelProperty(value = "name", required = true, dataType = "java.lang.String")
 	public String name;
-
 }

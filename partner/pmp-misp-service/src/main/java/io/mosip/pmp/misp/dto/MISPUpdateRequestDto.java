@@ -1,6 +1,7 @@
 package io.mosip.pmp.misp.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
@@ -26,25 +27,29 @@ public class MISPUpdateRequestDto {
 
 	
 	@NotBlank
+	@NotNull
 	@Size(min = 1, max = 128)
 	@ApiModelProperty(value ="name", required = false, dataType = "java.lang.String")	
 	public String name;	
 	
 
+	@NotBlank
+	@NotNull
 	@Size(min = 0, max = 16)
 	@ApiModelProperty(value= "contactNumber", required = false, dataType = "java.lang.String")
 	public String contactNumber;
 	
 	
+	@NotBlank
+	@NotNull
 	@Size(min = 1, max = 256)
 	@ApiModelProperty(value = "emailID", required = false, dataType = "java.lang.String")
 	public String emailId;
 	
-	
+	@NotBlank
+	@NotNull
 	@Size(min = 1, max= 2000)
 	@ApiModelProperty(value = "address", required = false, dataType = "java.lang.String")
 	public String address;
 	
-	@ApiModelProperty(value = "status_code", required = false, dataType = "java.lang.String")
-	public String status_code;
 }
